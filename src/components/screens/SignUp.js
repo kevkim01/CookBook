@@ -10,8 +10,9 @@ class SignUp extends Component {
       credentials: {
         username: "",
         email:"",
-        password:""
-      }
+        password:"",
+      },
+      errorMessage: null,
     };
   }
 
@@ -21,7 +22,17 @@ class SignUp extends Component {
   }
 
   submitForm() {
-    this.props.navigation.navigate('main');
+    firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => {
+      this.props.navigation.navigate('main');
+      var user = firebase.auth().currentUser;
+      firebase.database().ref('users').child(user.uid).set({
+        email: this.state.email,
+        username: this.state.username
+      });
+    })
+    .catch(error => this.setState({ errorMessage: error.message }))
+
   }
 
   render(){
@@ -29,11 +40,17 @@ class SignUp extends Component {
       <View style={styles.container}>
         <Image style={styles.logo} source = {config.images.logo} resizeMode={"contain"}/>
 
+        {this.state.errorMessage &&
+          <Text style={{ color: 'red' }}>
+            {this.state.errorMessage}
+          </Text>}
+
         <TextInput
           style={styles.textinput}
           placeholder='username'
           autoCorrect={false}
           autoCapitalize="none"
+          clearButtonMode={'always'}
           onChangeText={username => this.setState({username})}
           value={this.state.username}
         />
@@ -42,6 +59,7 @@ class SignUp extends Component {
           placeholder='email'
           autoCorrect={false}
           autoCapitalize="none"
+          clearButtonMode={'always'}
           onChangeText={email => this.setState({email})}
           value={this.state.email}
         />
@@ -50,6 +68,7 @@ class SignUp extends Component {
           placeholder='password'
           autoCorrect={false}
           autoCapitalize="none"
+          clearButtonMode={'always'}
           onChangeText={password => this.setState({password})}
           value={this.state.password}
           secureTextEntry

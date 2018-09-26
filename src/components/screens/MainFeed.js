@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Recipe } from '../presentation';
+import firebase from 'react-native-firebase';
+
 
 class MainFeed extends Component {
   constructor(props) {
@@ -8,8 +10,20 @@ class MainFeed extends Component {
     this.state={
       name: 'Pizza',
       ingredients: ['cheese', 'chicken', 'olives'],
-      instructions: ['make the dough', 'make the sauce', 'bake it til its done']
+      instructions: ['make the dough', 'make the sauce', 'bake it til its done'],
+      currentUser: null
     }
+  }
+
+  componentDidMount(){
+    var user = firebase.auth().currentUser;
+    this.setState({
+      currentUser: user
+    })
+  }
+
+  signOut() {
+    firebase.auth().signOut();
   }
 
   render(){
@@ -24,6 +38,7 @@ class MainFeed extends Component {
 
     return(
       <View style={styles.container}>
+        <Text>Hi {this.state.currentUser && this.state.currentUser.email}</Text>
 
         <View>
           <Text style={{fontSize:20}}>{this.state.name}</Text>
@@ -38,6 +53,13 @@ class MainFeed extends Component {
           <Text>Instructions</Text>
           {instructionList}
         </View>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {this.signOut()}}
+        >
+          <Text>Sign Out</Text>
+        </TouchableOpacity>
 
       </View>
     );
@@ -56,7 +78,16 @@ const styles = StyleSheet.create({
   },
   instructions: {
     color: 'rgb(31, 255, 19)'
-  }
+  },
+  button: {
+    width:70+'%',
+    padding: 7,
+    marginBottom: 30,
+    borderRadius: 5,
+    backgroundColor:'rgb(57, 181, 174)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default MainFeed;

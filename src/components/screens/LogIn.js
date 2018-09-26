@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Button, TextInput, Image } from 'react-native';
-import config from '../../config'
-
+import config from '../../config';
+import firebase from 'react-native-firebase';
 
 class LogIn extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      credentials: {
+        email:"",
+        password:"",
+        errorMessage: null,
+      }
+    };
+  }
 
   navToSignUp() {
     //Navigate to sign up
@@ -11,7 +21,9 @@ class LogIn extends Component {
   }
 
   submitForm() {
-    this.props.navigation.navigate('main');
+    firebase.auth().signInAndRetrieveDataWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => this.props.navigation.navigate('main'))
+    .catch(error => this.setState({ errorMessage: error.message }))
   }
 
   render(){
@@ -19,15 +31,28 @@ class LogIn extends Component {
       <View style={styles.container}>
         <Image style={styles.logo} source = {config.images.logo} resizeMode={"contain"}/>
 
+        {this.state.errorMessage &&
+          <Text style={{ color: 'red' }}>
+            {this.state.errorMessage}
+          </Text>}
+
         <TextInput
           style={styles.textinput}
-          placeholder='email or username'
+          placeholder='email'
           autoCorrect={false}
+          autoCapitalize="none"
+          clearButtonMode={'always'}
+          onChangeText={email => this.setState({email})}
+          value={this.state.email}
         />
         <TextInput
           style={styles.textinput}
           placeholder='password'
           autoCorrect={false}
+          autoCapitalize="none"
+          clearButtonMode={'always'}
+          onChangeText={password => this.setState({password})}
+          value={this.state.password}
           secureTextEntry
         />
         <TouchableOpacity
