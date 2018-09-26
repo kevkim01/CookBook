@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { LandingScreen, MainFeed, LogIn, SignUp } from './components/screens';
+import { LandingScreen, MainFeed, LogIn, SignUp, Loading } from './components/screens';
 import { createSwitchNavigator, createTabNavigator, createStackNavigator } from 'react-navigation';
 
 const IntroStack = createSwitchNavigator({
@@ -10,6 +10,7 @@ const IntroStack = createSwitchNavigator({
 })
 
 const MainStack = createSwitchNavigator({
+  loading: Loading,
   intro: IntroStack,
   main: MainFeed,
 })

@@ -33,16 +33,25 @@ class SignUp extends Component {
           style={styles.textinput}
           placeholder='username'
           autoCorrect={false}
+          autoCapitalize="none"
+          onChangeText={username => this.setState({username})}
+          value={this.state.username}
         />
         <TextInput
           style={styles.textinput}
           placeholder='email'
           autoCorrect={false}
+          autoCapitalize="none"
+          onChangeText={email => this.setState({email})}
+          value={this.state.email}
         />
         <TextInput
           style={styles.textinput}
           placeholder='password'
           autoCorrect={false}
+          autoCapitalize="none"
+          onChangeText={password => this.setState({password})}
+          value={this.state.password}
           secureTextEntry
         />
 
