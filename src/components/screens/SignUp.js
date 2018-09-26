@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import firebase from 'react-native-firebase';
+import config from '../../config'
 
 class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      credentials: {
+        username: "",
+        email:"",
+        password:""
+      }
+    };
+  }
 
   navToLogin() {
     //Navigate to Log in
@@ -15,19 +27,22 @@ class SignUp extends Component {
   render(){
     return(
       <View style={styles.container}>
-        <Text style={{marginBottom:40, fontSize: 30}}>Sign up page</Text>
+        <Image style={styles.logo} source = {config.images.logo} resizeMode={"contain"}/>
 
         <TextInput
           style={styles.textinput}
           placeholder='username'
+          autoCorrect={false}
         />
         <TextInput
           style={styles.textinput}
           placeholder='email'
+          autoCorrect={false}
         />
         <TextInput
           style={styles.textinput}
           placeholder='password'
+          autoCorrect={false}
           secureTextEntry
         />
 
@@ -73,6 +88,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottomColor: 'rgb(209, 207, 207)',
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  logo: {
+    width: 50+'%',
+    height: 10+'%',
+    marginBottom: 30
   }
 });
 

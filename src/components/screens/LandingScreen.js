@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Fonts } from '../../utils/fonts';
+import config from '../../config'
+
 
 class LandingScreen extends Component {
   navToLogin() {
@@ -15,13 +18,14 @@ class LandingScreen extends Component {
   render(){
     return(
       <View style={styles.container}>
-        <Text style={{color:'white', fontSize:40, fontStyle:"italic"}}>Cook Book</Text>
+        <Image style={styles.logo} source = {config.images.logo} resizeMode={"contain"}/>
         <TouchableOpacity
           onPress={() => {
             this.navToSignUp();
           }}
+          style={styles.button}
         >
-          <Text>Sign Up</Text>
+          <Text style={{color:'rgb(255, 255, 255)'}}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {this.navToLogin();}}
@@ -38,8 +42,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgb(57, 181, 174)',
+    backgroundColor: 'rgb(255, 255, 255)',
   },
+  button: {
+    width:70+'%',
+    padding: 7,
+    marginBottom: 10,
+    borderRadius: 5,
+    backgroundColor:'rgb(57, 181, 174)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 75+'%',
+    height: 20+'%',
+    marginBottom: 30
+  }
 });
 
 export default LandingScreen;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Button, TextInput, Image } from 'react-native';
+import config from '../../config'
+
 
 class LogIn extends Component {
 
@@ -15,15 +17,17 @@ class LogIn extends Component {
   render(){
     return(
       <View style={styles.container}>
-        <Text style={{marginBottom:40, fontSize: 30}}>log in page</Text>
+        <Image style={styles.logo} source = {config.images.logo} resizeMode={"contain"}/>
 
         <TextInput
           style={styles.textinput}
           placeholder='email or username'
+          autoCorrect={false}
         />
         <TextInput
           style={styles.textinput}
           placeholder='password'
+          autoCorrect={false}
           secureTextEntry
         />
         <TouchableOpacity
@@ -68,6 +72,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottomColor: 'rgb(209, 207, 207)',
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  logo: {
+    width: 50+'%',
+    height: 10+'%',
+    marginBottom: 30
   }
 });
 
