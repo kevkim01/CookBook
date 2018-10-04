@@ -41,7 +41,8 @@ class LogIn extends Component {
           placeholder='email'
           autoCorrect={false}
           autoCapitalize="none"
-          clearButtonMode={'always'}
+          clearButtonMode={'while-editing'}
+          keyboardType={'email-address'}
           onChangeText={email => this.setState({email})}
           value={this.state.email}
         />
@@ -50,7 +51,7 @@ class LogIn extends Component {
           placeholder='password'
           autoCorrect={false}
           autoCapitalize="none"
-          clearButtonMode={'always'}
+          clearButtonMode={'while-editing'}
           onChangeText={password => this.setState({password})}
           value={this.state.password}
           secureTextEntry

@@ -26,10 +26,12 @@ class SignUp extends Component {
     .then(() => {
       this.props.navigation.navigate('main');
       var user = firebase.auth().currentUser;
-      firebase.database().ref('users').child(user.uid).set({
+      var uid = user.uid;
+      firebase.database().ref('users').child(uid).set({
         email: this.state.email,
-        username: this.state.username
+        username: this.state.username,
       });
+
     })
     .catch(error => this.setState({ errorMessage: error.message }))
 
@@ -50,7 +52,7 @@ class SignUp extends Component {
           placeholder='username'
           autoCorrect={false}
           autoCapitalize="none"
-          clearButtonMode={'always'}
+          clearButtonMode={'while-editing'}
           onChangeText={username => this.setState({username})}
           value={this.state.username}
         />
@@ -59,7 +61,8 @@ class SignUp extends Component {
           placeholder='email'
           autoCorrect={false}
           autoCapitalize="none"
-          clearButtonMode={'always'}
+          clearButtonMode={'while-editing'}
+          keyboardType={'email-address'}
           onChangeText={email => this.setState({email})}
           value={this.state.email}
         />
@@ -68,7 +71,7 @@ class SignUp extends Component {
           placeholder='password'
           autoCorrect={false}
           autoCapitalize="none"
-          clearButtonMode={'always'}
+          clearButtonMode={'while-editing'}
           onChangeText={password => this.setState({password})}
           value={this.state.password}
           secureTextEntry

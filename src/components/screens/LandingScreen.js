@@ -6,12 +6,10 @@ import config from '../../config'
 
 class LandingScreen extends Component {
   navToLogin() {
-    //Navigate to Log in
     this.props.navigation.navigate('login');
   }
 
   navToSignUp() {
-    //Navigate to sign up
     this.props.navigation.navigate('signup');
   }
 
