@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { Recipe } from '../presentation';
+import { CreateRecipe } from '../container';
 import firebase from 'react-native-firebase';
 
 
 class MainFeed extends Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       currentUser: null,
-      recipeName: '',
-      ingredients: [{ name: '', quantity: ''}],
-      instructions: [{ step: ''}]
+      myRecipes: []
     }
   }
 
   componentDidMount(){
     var user = firebase.auth().currentUser;
-    this.setState({
-      currentUser: user
+    ref = firebase.database().ref('users/' + user.uid + '/recipeList');
+
+    ref.on('value', snapshot => {
+      let recipes = []
+      snapshot.forEach(function(childSnapshot) {
+        var childData = childSnapshot.val();
+        recipes.push(childData);
+      })
+      this.setState({
+        currentUser: user,
+        myRecipes: recipes
+      });
     })
   }
 
@@ -26,171 +35,67 @@ class MainFeed extends Component {
     firebase.auth().signOut();
   }
 
-  addInput(category){
-    if(category === 'ingredients'){
-      this.setState({
-        ingredients: [...this.state.ingredients, {name:'', quantity: ''} ]
-      })
-    }
-    else{
-      this.setState({
-        instructions: [...this.state.instructions, {step:''}]
-      })
-    }
-
+  navToCreateRecipe() {
+    this.props.navigation.navigate('createrecipe');
   }
 
-  deleteInput(index, category){
-    let copy = JSON.parse(JSON.stringify(this.state[category]));
-    copy.splice(index,1);
-    this.setState({
-      [category]: copy
-    })
-  }
-
-  handleChange(e,index,category,field){
-    let copy = JSON.parse(JSON.stringify(this.state[category]));
-    copy[index][field] = e;
-    this.setState({
-      [category]: copy
-    })
+  selectRecipe(key) {
+    console.log(key);
+    this.props.navigation.navigate('recipepage',{recipeid: [key]});
   }
 
   render(){
     return(
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
         <Text>Hi {this.state.currentUser && this.state.currentUser.email}</Text>
 
-        <Text>recipe name</Text>
-        <TextInput
-          style = {styles.textinput}
-          placeholder='recipe name'
-          spellCheck={true}
-          autoCorrect={false}
-          value={this.state.recipeName}
-          onChangeText={recipeName => this.setState({recipeName})}
-        />
+          <FlatList
+            style={{flex:1, width:75+'%'}}
+            data={this.state.myRecipes}
+            extraData={this.state}
+            renderItem={({ item, index }) =>
+              <TouchableOpacity
+                key={index}
+                style = {styles.recipeTab}
+                onPress = {() => this.selectRecipe(item.key)}
+              >
+                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems: 'center'}}>
+                  <View>
+                    <Text>{item.recipename}</Text>
+                    <Text style={{color:'rgb(130, 130, 130)', fontSize: 12}}>{item.creator}</Text>
+                  </View>
+                  <Text>></Text>
+                </View>
 
-        <Text>Ingredients</Text>
-
-        {this.state.ingredients.map((item,index) =>
-          <View style={{flexDirection: 'row', width: 70+ '%', justifyContent: 'space-between'}} key = {index}>
-            <TextInput
-              style={styles.ingredientinput}
-              placeholder='ingredient'
-              spellCheck={true}
-              autoCorrect={false}
-              clearButtonMode={'while-editing'}
-              value={item.name}
-              onChangeText={(e)=> this.handleChange(e, index, 'ingredients', 'name')}
-            />
-            <TextInput
-              style={styles.quantityinput}
-              placeholder='measure'
-              spellCheck={true}
-              autoCorrect={false}
-              clearButtonMode={'while-editing'}
-              value={item.quantity}
-              onChangeText={(e)=> this.handleChange(e, index, 'ingredients', 'quantity')}
-            />
-            <TouchableOpacity
-              onPress={() => {this.deleteInput(index, 'ingredients')}}
-            >
-              <Text style={{color:'rgb(209, 207, 207)'}}>x</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        <TouchableOpacity
-          style = {styles.addButton}
-          onPress={() => {this.addInput('ingredients')}}
-        >
-          <Text style={{color:"rgb(255, 255, 255)"}}>+</Text>
-        </TouchableOpacity>
-
-
-
-        <Text>Instructions</Text>
-
-        {this.state.instructions.map((item,index) =>
-          <View style={{flexDirection: 'row', width: 70+ '%', justifyContent: 'space-between'}} key = {index}>
-            <TextInput
-              style={styles.instructioninput}
-              placeholder='instruction'
-              spellCheck={true}
-              autoCorrect={false}
-              clearButtonMode={'while-editing'}
-              value={item.name}
-              onChangeText={(e)=> this.handleChange(e, index,'instructions', 'step')}
-            />
-            <TouchableOpacity
-              onPress={() => {this.deleteInput(index, 'instructions')}}
-            >
-              <Text style={{color:'rgb(209, 207, 207)'}}>x</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        <TouchableOpacity
-          style = {styles.addButton}
-          onPress={() => {this.addInput('instructions')}}
-        >
-          <Text style={{color:"rgb(255, 255, 255)"}}>+</Text>
-        </TouchableOpacity>
+              </TouchableOpacity>
+            }
+          />
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {}}
+          onPress = {() => this.navToCreateRecipe()}
         >
-          <Text>Submit</Text>
+          <Text style={{color:"rgb(255, 255, 255)"}}>create recipe</Text>
         </TouchableOpacity>
 
+        {/* sign out button */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => {this.signOut()}}
         >
-          <Text>Sign Out</Text>
+          <Text style={{color:"rgb(255, 255, 255)"}}>Sign Out</Text>
         </TouchableOpacity>
-
-      </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgb(255, 255, 255)',
-  },
-  textinput: {
-    width:70+'%',
-    padding: 5,
-    marginBottom: 20,
-    borderBottomColor: 'rgb(209, 207, 207)',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  ingredientinput: {
-    width:60+'%',
-    padding: 5,
-    marginBottom: 20,
-    borderBottomColor: 'rgb(209, 207, 207)',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  quantityinput: {
-    width:30+'%',
-    padding: 5,
-    marginBottom: 20,
-    borderBottomColor: 'rgb(209, 207, 207)',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  instructioninput: {
-    width:93+'%',
-    padding: 5,
-    marginBottom: 20,
-    borderBottomColor: 'rgb(209, 207, 207)',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   button: {
     width:70+'%',
@@ -201,13 +106,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  addButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-    backgroundColor:'rgb(57, 181, 174)',
-    justifyContent: 'center',
-    alignItems: 'center',
+  recipeTab: {
+    padding: 5,
+    paddingHorizontal:10,
+    borderRadius: 5,
+    backgroundColor: 'rgba(236, 246, 246, 0.67)',
+    marginBottom: 5
+
   }
 });
 

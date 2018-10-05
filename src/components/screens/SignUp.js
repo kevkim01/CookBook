@@ -17,7 +17,6 @@ class SignUp extends Component {
   }
 
   navToLogin() {
-    //Navigate to Log in
     this.props.navigation.navigate('login');
   }
 
