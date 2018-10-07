@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { Recipe } from '../presentation';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Image, Alert } from 'react-native';
+import { Recipe, Logo } from '../presentation';
 import { CreateRecipe } from '../container';
 import firebase from 'react-native-firebase';
 
@@ -13,6 +13,18 @@ class MainFeed extends Component {
       myRecipes: []
     }
   }
+
+  static navigationOptions = {
+    headerTitle: <Logo />,
+    headerRight: (
+      <TouchableOpacity
+        onPress = {() => Alert.alert('button')}
+      >
+        <Text>[ menu ]</Text>
+      </TouchableOpacity>
+    ),
+  };
+
 
   componentDidMount(){
     var user = firebase.auth().currentUser;
@@ -50,7 +62,7 @@ class MainFeed extends Component {
         <Text>Hi {this.state.currentUser && this.state.currentUser.email}</Text>
 
           <FlatList
-            style={{flex:1, width:75+'%'}}
+            style={{flex:1, width:100+'%'}}
             data={this.state.myRecipes}
             extraData={this.state}
             renderItem={({ item, index }) =>
@@ -112,7 +124,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'rgba(236, 246, 246, 0.67)',
     marginBottom: 5
-
+  },
+  logo: {
+    width: 50+'%',
+    height: 10+'%',
+    marginBottom: 30
   }
 });
 

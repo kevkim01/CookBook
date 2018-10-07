@@ -12,12 +12,13 @@ class CreateRecipe extends Component {
       recipeName: '',
       creator: '',
       category: '',
+      cooktime: '',
       ingredients: [{ name: '', quantity: ''}],
       instructions: [{ step: ''}]
     }
   }
   static navigationOptions = {
-    title: 'Create Recipe',
+    headerTitle: 'create recipe',
   };
 
   componentDidMount(){
@@ -62,6 +63,10 @@ class CreateRecipe extends Component {
       Alert.alert('recipe needs a name!');
       return;
     }
+    else if(this.state.category === ''){
+      Alert.alert('missing category!');
+      return;
+    }
     let key = this.state.recipeName + '-' + this.state.creator + '-' + this.state.currentUser.uid;
     let path = 'users/' + this.state.currentUser.uid;
 
@@ -75,6 +80,7 @@ class CreateRecipe extends Component {
       name: this.state.recipeName,
       creator: this.state.creator,
       category: this.state.category,
+      cooktime: this.state.cooktime,
       ingredients: this.state.ingredients,
       instructions: this.state.instructions
     });
@@ -84,6 +90,7 @@ class CreateRecipe extends Component {
       recipeName: '',
       creator: '',
       category: '',
+      cooktime: '',
       ingredients: [{ name: '', quantity: ''}],
       instructions: [{ step: ''}]
     })
@@ -92,7 +99,14 @@ class CreateRecipe extends Component {
   render(){
     return(
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.containerScroll} style={{flex:1, paddingTop: 20}}>
+        <ScrollView
+          contentContainerStyle={styles.containerScroll}
+          style={{flex:1, marginBottom: 10, paddingTop: 15}}
+          ref={ref => this.scrollView = ref}
+          onContentSizeChange={(contentWidth, contentHeight)=>{
+            this.scrollView.scrollToEnd({animated: true})
+          }}
+        >
 
           {/* Recipe Name input -- Required */}
           <Text style={{width:70+'%', justifyContent:'flex-start'}}>name your recipe</Text>
@@ -118,6 +132,17 @@ class CreateRecipe extends Component {
             autoCorrect={false}
             value={this.state.creator}
             onChangeText={creator => this.setState({creator})}
+          />
+
+          {/* Cook time input */}
+          <Text style={{width:70+'%', justifyContent:'flex-start'}}>cook time</Text>
+          <TextInput
+            style = {styles.textinput}
+            placeholder='ex: 1 hr'
+            spellCheck={true}
+            autoCorrect={false}
+            value={this.state.cooktime}
+            onChangeText={cooktime => this.setState({cooktime})}
           />
 
           {/* <Text style={{color:'rgb(208, 204, 204)', fontSize:14}}>choose category</Text> */}
@@ -238,8 +263,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     alignItems:'center',
-    backgroundColor: 'rgb(239, 247, 250)',
-    paddingTop: 20,
+    paddingTop: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor:'rgb(209, 207, 207)'
   },
@@ -272,7 +296,7 @@ const styles = StyleSheet.create({
   button: {
     width:70+'%',
     padding: 7,
-    marginBottom: 20,
+    marginBottom: 10,
     borderRadius: 5,
     backgroundColor:'rgb(57, 181, 174)',
     justifyContent: 'center',

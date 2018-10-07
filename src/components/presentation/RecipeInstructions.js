@@ -1,34 +1,32 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
-//import { Logo, RecipeDescription, RecipeIngredients, RecipeInstructions } from '../../components/presentation';
 import Logo from './Logo.js';
-import RecipeDescription from './RecipeDescription.js';
-import RecipeInstructions from './RecipeInstructions.js';
-import RecipeIngredients from './RecipeIngredients.js';
 
-
-class Recipe extends Component {
+class RecipeInstructions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeName: '',
-      creator: '',
-      category: '',
-      cooktime: '',
-      ingredients: [{ name: '', quantity: ''}],
       instructions: [{ step: ''}]
     }
   }
+  componentDidMount(){
+    var key = this.props.navigation.getParam('recipeid');
+    ref = firebase.database().ref('recipes/' + key);
 
-  static navigationOptions = {
-    headerTitle: <Logo />,
-  };
+    ref.on('value', snapshot => {
+      this.setState({
+        instructions: snapshot.val().instructions
+      })
+    })
+  }
 
   render(){
     return(
       <View style={styles.container}>
-        <RecipeTabs />
+        {this.state.instructions.map((item,index) =>
+          <Text key={index}>{index+1}. {item.step}</Text>
+        )}
       </View>
     );
   }
@@ -43,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Recipe;
+export default RecipeInstructions;
