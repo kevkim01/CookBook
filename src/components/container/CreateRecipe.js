@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert, Picker } from 'react-native';
 import { Recipe } from '../presentation';
 import firebase from 'react-native-firebase';
-
+import { Icon } from 'react-native-elements';
 
 class CreateRecipe extends Component {
   constructor(props) {
@@ -17,8 +17,18 @@ class CreateRecipe extends Component {
       instructions: [{ step: ''}]
     }
   }
+
   static navigationOptions = {
-    headerTitle: 'create recipe',
+    headerRight: (
+      <TouchableOpacity
+        onPress = {() => Alert.alert('button')}
+        style={{paddingRight: 20}}
+      >
+        <Icon
+          name="menu"
+        />
+      </TouchableOpacity>
+    )
   };
 
   componentDidMount(){
@@ -39,11 +49,13 @@ class CreateRecipe extends Component {
         instructions: [...this.state.instructions, {step:''}]
       })
     }
-
   }
 
   deleteInput(index, category){
     let copy = JSON.parse(JSON.stringify(this.state[category]));
+    if(copy.length < 2){
+      return;
+    }
     copy.splice(index,1);
     this.setState({
       [category]: copy
@@ -96,35 +108,34 @@ class CreateRecipe extends Component {
     })
   }
 
+
+  // ref={ref => this.scrollView = ref}
+  // onContentSizeChange={(contentWidth, contentHeight)=>{
+  //   this.scrollView.scrollToEnd({animated: true})
+  // }}
   render(){
     return(
       <View style={styles.container}>
         <ScrollView
           contentContainerStyle={styles.containerScroll}
-          style={{flex:1, marginBottom: 10, paddingTop: 15}}
-          ref={ref => this.scrollView = ref}
-          onContentSizeChange={(contentWidth, contentHeight)=>{
-            this.scrollView.scrollToEnd({animated: true})
-          }}
         >
 
           {/* Recipe Name input -- Required */}
-          <Text style={{width:70+'%', justifyContent:'flex-start'}}>name your recipe</Text>
-          <View style={styles.rowStyle}>
-            <Text style={{color:'red',paddingBottom:15}}>*</Text>
-            <TextInput
-              style = {styles.textinput}
-              placeholder='ex: beef wellington'
-              spellCheck={true}
-              autoCorrect={false}
-              value={this.state.recipeName}
-              onChangeText={recipeName => this.setState({recipeName})}
-            />
-            <Text style={{color:"rgb(255, 255, 255)"}}>*</Text>
+          <View style={{flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}}>
+            <Text style={{color:'red', fontWeight:'bold'}}>* </Text>
+            <Text style={styles.textHeader}>name your recipe</Text>
           </View>
+          <TextInput
+            style = {styles.textinput}
+            placeholder='ex: beef wellington'
+            spellCheck={true}
+            autoCorrect={false}
+            value={this.state.recipeName}
+            onChangeText={recipeName => this.setState({recipeName})}
+          />
 
           {/* Creator input */}
-          <Text style={{width:70+'%', justifyContent:'flex-start'}}>who created it?</Text>
+          <Text style={styles.textHeader}>who created it?</Text>
           <TextInput
             style = {styles.textinput}
             placeholder='ex: gordon ramsey'
@@ -135,7 +146,7 @@ class CreateRecipe extends Component {
           />
 
           {/* Cook time input */}
-          <Text style={{width:70+'%', justifyContent:'flex-start'}}>cook time</Text>
+          <Text style={styles.textHeader}>cook time</Text>
           <TextInput
             style = {styles.textinput}
             placeholder='ex: 1 hr'
@@ -146,13 +157,12 @@ class CreateRecipe extends Component {
           />
 
           {/* <Text style={{color:'rgb(208, 204, 204)', fontSize:14}}>choose category</Text> */}
-
           <View style={styles.rowStyle}>
-            <Text style={{color:'red',paddingBottom:25}}>*</Text>
+            <Text style={{color:'red', fontWeight:'bold'}}>*</Text>
             <Picker
               mode='dropdown'
               selectedValue={this.state.category}
-              style={{ width: 70 +'%', height: 100, marginBottom: 20, marginTop: -10}}
+              style={{ width: 80 +'%', height: 100}}
               itemStyle={{fontSize:15, height:100}}
               onValueChange={(item, index) => this.setState({category:item})}
             >
@@ -165,11 +175,11 @@ class CreateRecipe extends Component {
           </View>
 
           {/* Ingredients input */}
-          <Text style={{width:70+'%', justifyContent:'flex-start'}}>add your ingredients and measures</Text>
+          <Text style={styles.textHeader}>add your ingredients and measures</Text>
           {this.state.ingredients.map((item,index) =>
             <View style={styles.rowStyle} key = {index}>
               <Text style={{color:"rgb(255, 255, 255)"}}> x</Text>
-              <View style={{width:70+'%', flexDirection:'row', justifyContent:'space-between'}}>
+              <View style={{width:80+'%', flexDirection:'row', justifyContent:'space-between'}}>
                 <TextInput
                   style={styles.ingredientinput}
                   placeholder='ex: filet mignon'
@@ -192,7 +202,12 @@ class CreateRecipe extends Component {
               <TouchableOpacity
                 onPress={() => {this.deleteInput(index, 'ingredients')}}
               >
-                <Text style={{color:'rgb(209, 207, 207)', paddingBottom:15}}> x</Text>
+                <Icon
+                  name='remove-circle-outline'
+                  size= {15}
+                  onPress={() => {this.deleteInput(index, 'ingredients')}}
+                  containerStyle={{alignItems:'center'}}
+                  />
               </TouchableOpacity>
             </View>
           )}
@@ -202,16 +217,16 @@ class CreateRecipe extends Component {
             style = {styles.addButton}
             onPress={() => {this.addInput('ingredients')}}
           >
-            <Text style={{color:"rgb(255, 255, 255)"}}>+</Text>
+            <Text style={{color:"rgb(255, 255, 255)", fontWeight:'bold'}}>+</Text>
           </TouchableOpacity>
 
           {/* Instructions input */}
-          <Text style={{width:70+'%', justifyContent:'flex-start'}}>add your instructions</Text>
+          <Text style={styles.textHeader}>add your instructions</Text>
           {this.state.instructions.map((item,index) =>
             <View style={styles.rowStyle} key = {index}>
               <Text style={{color:"rgb(255, 255, 255)"}}> x</Text>
               <TextInput
-                style={styles.textinput}
+                style={styles.instructioninput}
                 placeholder='ex: season filet with salt'
                 spellCheck={true}
                 autoCorrect={false}
@@ -222,7 +237,12 @@ class CreateRecipe extends Component {
               <TouchableOpacity
                 onPress={() => {this.deleteInput(index, 'instructions')}}
               >
-                <Text style={{color:'rgb(209, 207, 207)', paddingBottom:15}}> x</Text>
+              <Icon
+                name='remove-circle-outline'
+                size= {15}
+                onPress={() => {this.deleteInput(index, 'instructions')}}
+                containerStyle={{alignItems:'center'}}
+                />
               </TouchableOpacity>
             </View>
           )}
@@ -256,6 +276,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'rgb(255, 255, 255)',
+    paddingTop: 10,
+    paddingBottom: 10
   },
   containerScroll: {
     flexGrow: 1,
@@ -267,49 +289,62 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor:'rgb(209, 207, 207)'
   },
+  textHeader: {
+    width:80+'%',
+    justifyContent:'flex-start',
+    marginBottom: 5
+  },
   textinput: {
-    width:70+'%',
+    width:80+'%',
     padding: 5,
     marginBottom: 20,
+    borderBottomColor: 'rgb(209, 207, 207)',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  instructioninput: {
+    width:80+'%',
+    padding: 5,
     borderBottomColor: 'rgb(209, 207, 207)',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   rowStyle: {
     flexDirection:'row',
     justifyContent:'space-between',
-    alignItems:'center'
+    alignItems:'center',
+    marginBottom: 20
   },
   ingredientinput: {
     width:65+'%',
     padding: 5,
-    marginBottom: 20,
     borderBottomColor: 'rgb(209, 207, 207)',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   quantityinput: {
     width:30+'%',
     padding: 5,
-    marginBottom: 20,
     borderBottomColor: 'rgb(209, 207, 207)',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   button: {
     width:70+'%',
     padding: 7,
-    marginBottom: 10,
     borderRadius: 5,
     backgroundColor:'rgb(57, 181, 174)',
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: 'rgb(52, 164, 158)',
+    borderWidth: 1
   },
   addButton: {
     width: 30,
     height: 30,
     borderRadius: 20,
-    marginBottom: 20,
     backgroundColor:'rgb(57, 181, 174)',
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: 'rgb(52, 164, 158)',
+    borderWidth: 1,
+    marginBottom: 20
   }
 });
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { LandingScreen, MainFeed, LogIn, SignUp, Loading } from './components/screens';
-import { CreateRecipe } from './components/container';
+import { CreateRecipe, TestCreate } from './components/container';
 import { Logo, RecipeDescription, RecipeIngredients, RecipeInstructions } from './components/presentation';
 import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator} from 'react-navigation';
+import { Icon } from 'react-native-elements';
 
 const IntroStack = createSwitchNavigator({
   landpage: LandingScreen,
@@ -22,15 +23,13 @@ const RecipeTabs = createBottomTabNavigator({
       const { routeName } = navigation.state;
       let iconName;
       if (routeName === 'description') {
-        iconName = `description${focused ? '' : '-outline'}`;
+        iconName = `description`;
       } else if (routeName === 'ingredients') {
-        iconName = `ingredients${focused ? '' : '-outline'}`;
+        iconName = `kitchen`;
       } else if (routeName === 'instructions') {
-        iconName = `instructions${focused ? '' : '-outline'}`;
+        iconName = `list`;
       }
-
-      // You can return any component that you like here! We usually use an
-      // icon component from react-native-vector-icons
+      return <Icon name={iconName} color={tintColor}/>;
     },
   }),
   tabBarOptions: {
@@ -43,11 +42,33 @@ const RecipeTabs = createBottomTabNavigator({
 const FeedStack = createStackNavigator({
   mainfeed: MainFeed,
   createrecipe: CreateRecipe,
+  testcreate: TestCreate,
   recipepage: RecipeTabs
 },
 {
   navigationOptions: {
     headerTitle: <Logo />,
+    headerRight: (
+      <View style ={{flexDirection:'row', alignItems:'center'}}>
+        <TouchableOpacity
+          onPress = {() => Alert.alert('edit')}
+          style={{paddingRight: 7}}
+        >
+          <Icon
+            name="edit"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress = {() => Alert.alert('menu')}
+          style={{paddingRight: 20}}
+        >
+          <Icon
+            name="menu"
+          />
+        </TouchableOpacity>
+      </View>
+    ),
+    headerTintColor: 'rgb(57, 181, 174)',
   }
 })
 

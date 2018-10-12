@@ -14,6 +14,8 @@ class RecipeDescription extends Component {
     }
   }
 
+  
+
   componentDidMount(){
     var key = this.props.navigation.getParam('recipeid');
     ref = firebase.database().ref('recipes/' + key);

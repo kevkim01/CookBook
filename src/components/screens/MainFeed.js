@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollVi
 import { Recipe, Logo } from '../presentation';
 import { CreateRecipe } from '../container';
 import firebase from 'react-native-firebase';
-
+import { Icon } from 'react-native-elements'
 
 class MainFeed extends Component {
   constructor(props) {
@@ -15,14 +15,16 @@ class MainFeed extends Component {
   }
 
   static navigationOptions = {
-    headerTitle: <Logo />,
     headerRight: (
       <TouchableOpacity
         onPress = {() => Alert.alert('button')}
+        style={{paddingRight: 20}}
       >
-        <Text>[ menu ]</Text>
+        <Icon
+          name="menu"
+        />
       </TouchableOpacity>
-    ),
+    )
   };
 
 
@@ -51,6 +53,10 @@ class MainFeed extends Component {
     this.props.navigation.navigate('createrecipe');
   }
 
+  navToTestCreate() {
+    this.props.navigation.navigate('testcreate');
+  }
+
   selectRecipe(key) {
     console.log(key);
     this.props.navigation.navigate('recipepage',{recipeid: [key]});
@@ -59,10 +65,8 @@ class MainFeed extends Component {
   render(){
     return(
       <View style={styles.container}>
-        <Text>Hi {this.state.currentUser && this.state.currentUser.email}</Text>
-
           <FlatList
-            style={{flex:1, width:100+'%'}}
+            style={{flex:1, width:95+'%'}}
             data={this.state.myRecipes}
             extraData={this.state}
             renderItem={({ item, index }) =>
@@ -76,7 +80,7 @@ class MainFeed extends Component {
                     <Text>{item.recipename}</Text>
                     <Text style={{color:'rgb(130, 130, 130)', fontSize: 12}}>{item.creator}</Text>
                   </View>
-                  <Text>></Text>
+                  <Icon name='navigate-next' />
                 </View>
 
               </TouchableOpacity>
@@ -93,9 +97,9 @@ class MainFeed extends Component {
         {/* sign out button */}
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {this.signOut()}}
+          onPress={() => {this.navToTestCreate()}}
         >
-          <Text style={{color:"rgb(255, 255, 255)"}}>Sign Out</Text>
+          <Text style={{color:"rgb(255, 255, 255)"}}>test create</Text>
         </TouchableOpacity>
       </View>
     );
@@ -108,6 +112,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgb(255, 255, 255)',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   button: {
     width:70+'%',
@@ -122,8 +128,10 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingHorizontal:10,
     borderRadius: 5,
-    backgroundColor: 'rgba(236, 246, 246, 0.67)',
-    marginBottom: 5
+    backgroundColor: 'rgba(236, 246, 246, 0.5)',
+    marginBottom: 5,
+    borderColor: 'rgb(216, 231, 229)',
+    borderWidth: 1
   },
   logo: {
     width: 50+'%',
