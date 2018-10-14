@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import firebase from 'react-native-firebase';
 import { Icon } from 'react-native-elements';
 import { Provider } from 'react-redux';
-import RecipeForm from '../reducers/recipeForm.js';
+import RecipeForm from './recipeForm.js';
 import store from '../reducers/reducer.js';
 import showResults from '../reducers/showResults.js'
 

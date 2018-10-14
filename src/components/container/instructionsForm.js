@@ -1,11 +1,10 @@
-import React from 'react'
-import { Field, FieldArray, reduxForm } from 'redux-form'
-import validate from './validate'
-const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']
-import renderText from './renderText';
-import renderInstructions from './renderInstructions';
+import React from 'react';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
+import validate from '../reducers/validate';
+import RenderText from '../reducers/renderText';
+import RenderInstructions from '../reducers/renderInstructions';
 
 const renderColorSelector = ({ input, meta: { touched, error } }) => (
   <div>
@@ -29,13 +28,13 @@ const instructionsForm = props => {
         <Field
           name="cookTime"
           type="recipe cook time"
-          component={renderText}
+          component={RenderText}
           label="ex. 1 hr"
         />
       </View>
       <FieldArray
         name="instructions"
-        component={renderInstructions}
+        component={RenderInstructions}
       />
 
       <View alignItems='center' justifyContent='center' style={{paddingTop:10}}>

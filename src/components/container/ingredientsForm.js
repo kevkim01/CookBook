@@ -1,9 +1,9 @@
-import React from 'react'
-import { Field, FieldArray, reduxForm } from 'redux-form'
-import validate from './validate'
-import renderIngredients from './renderIngredients'
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import { Icon } from 'react-native-elements';
+import validate from '../reducers/validate';
+import RenderIngredients from '../reducers/renderIngredients';
 
 const renderError = ({ meta: { touched, error } }) =>
   touched && error ? <span>{error}</span> : false
@@ -14,7 +14,7 @@ const ingredientsForm = props => {
     <View style={styles.container}>
       <FieldArray
         name="ingredients"
-        component={renderIngredients}
+        component={RenderIngredients}
       />
 
       <View alignItems='center' justifyContent='center' style={{paddingTop:10}}>

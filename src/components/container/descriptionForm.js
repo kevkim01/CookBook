@@ -1,11 +1,12 @@
-import React from 'react'
-import { Field, reduxForm } from 'redux-form'
-import validate from './validate'
-import renderText from './renderText'
-import renderPicker from './renderPicker'
+import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { Container, Item, Input, Header, Body, Content, Title, Button, Toast, Picker } from 'native-base';
 import { Icon } from 'react-native-elements';
+import { Field, reduxForm } from 'redux-form';
+import validate from '../reducers/validate';
+import RenderText from '../reducers/renderText';
+import RenderPicker from '../reducers/renderPicker';
+
 
 const descriptionForm = props => {
   const { handleSubmit } = props
@@ -15,19 +16,19 @@ const descriptionForm = props => {
       <Field
         name="recipeName"
         type="enter recipe name"
-        component={renderText}
+        component={RenderText}
         label="ex. Beef Wellington"
       />
       <Field
         name="creator"
         type="who created this recipe?"
-        component={renderText}
+        component={RenderText}
         label="ex. Gordon Ramsey"
       />
       <Field
         name="category"
         type="how is this dish classified?"
-        component={renderPicker}
+        component={RenderPicker}
         label="select a value"
       >
         <Picker.Item label="appetizer" value="appetizer" />
