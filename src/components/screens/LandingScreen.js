@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Fonts } from '../../utils/fonts';
 import config from '../../config'
-
+import colors from '../../utils/colors.js';
 
 class LandingScreen extends Component {
   navToLogin() {
@@ -23,7 +22,7 @@ class LandingScreen extends Component {
           }}
           style={styles.button}
         >
-          <Text style={{color:'rgb(255, 255, 255)'}}>Sign Up</Text>
+          <Text style={styles.whiteText}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {this.navToLogin();}}
@@ -40,22 +39,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgb(255, 255, 255)',
+    backgroundColor: colors.backgroundColor,
   },
   button: {
     width:70+'%',
-    padding: 7,
-    marginBottom: 10,
-    borderRadius: 5,
-    backgroundColor:'rgb(57, 181, 174)',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 7,
+    marginBottom: 10,
+    borderColor: colors.primaryBorder,
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: colors.primary,
   },
   logo: {
     width: 75+'%',
     height: 20+'%',
     marginBottom: 30
-  }
+  },
+  whiteText: {
+    color:"rgb(255, 255, 255)"
+  },
 });
 
 export default LandingScreen;

@@ -1,8 +1,7 @@
 import React from 'react'
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import validate from './validate'
-import renderField from './renderField'
-import renderIngField from './renderIngField'
+import renderIngredients from './renderIngredients'
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -14,8 +13,8 @@ const WizardFormSecondPage = props => {
   return (
     <View style={styles.container}>
       <FieldArray
-        name="ingredient"
-        component={renderIngField}
+        name="ingredients"
+        component={renderIngredients}
       />
 
       <View alignItems='center' justifyContent='center' style={{paddingTop:10}}>

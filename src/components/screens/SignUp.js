@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 import firebase from 'react-native-firebase';
-import config from '../../config'
+import config from '../../config';
+import colors from '../../utils/colors.js';
 
 class SignUp extends Component {
   constructor(props) {
@@ -80,15 +81,15 @@ class SignUp extends Component {
           style={styles.button}
           onPress={()=>{this.submitForm()}}
         >
-          <Text style={{color:'rgb(255, 255, 255)'}}>submit</Text>
+          <Text style={styles.whiteText}>submit</Text>
         </TouchableOpacity>
 
-        <View style={{flexDirection:'row'}}>
+        <View style={styles.row}>
           <Text>Have an account?</Text>
           <TouchableOpacity
             onPress={() => {this.navToLogin();}}
           >
-            <Text style={{color:'rgb(57, 181, 174)'}}> Log In</Text>
+            <Text style={styles.login}> Log In</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -123,6 +124,15 @@ const styles = StyleSheet.create({
     width: 50+'%',
     height: 10+'%',
     marginBottom: 30
+  },
+  whiteText: {
+    color:"rgb(255, 255, 255)"
+  },
+  row: {
+    flexDirection:'row'
+  },
+  login: {
+    color:colors.secondary,
   }
 });
 

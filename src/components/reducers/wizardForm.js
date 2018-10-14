@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   }
 })
 
-
 WizardForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import validate from './validate'
-import renderField from './renderField'
+import renderText from './renderText'
 import renderPickerField from './renderPickerField'
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { Container, Item, Input, Header, Body, Content, Title, Button, Toast, Picker } from 'native-base';
@@ -15,13 +15,13 @@ const WizardFormFirstPage = props => {
       <Field
         name="recipeName"
         type="enter recipe name"
-        component={renderField}
+        component={renderText}
         label="ex. Beef Wellington"
       />
       <Field
         name="creator"
         type="who created this recipe?"
-        component={renderField}
+        component={renderText}
         label="ex. Gordon Ramsey"
       />
       <Field

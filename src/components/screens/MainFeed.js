@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, Alert } from 'react-native';
+import { Icon } from 'react-native-elements'
+import firebase from 'react-native-firebase';
+
 import { Recipe, Logo } from '../presentation';
 import { CreateRecipe } from '../container';
-import firebase from 'react-native-firebase';
-import { Icon } from 'react-native-elements'
+import colors from '../../utils/colors.js';
 
 class MainFeed extends Component {
   constructor(props) {
@@ -66,7 +68,7 @@ class MainFeed extends Component {
     return(
       <View style={styles.container}>
           <FlatList
-            style={{flex:1, width:95+'%'}}
+            style={styles.listItems}
             data={this.state.myRecipes}
             extraData={this.state}
             renderItem={({ item, index }) =>
@@ -75,12 +77,12 @@ class MainFeed extends Component {
                 style = {styles.recipeTab}
                 onPress = {() => this.selectRecipe(item.key)}
               >
-                <View style={{flexDirection:'row', justifyContent:'space-between', alignItems: 'center'}}>
+                <View style={styles.itemRow}>
                   <View>
                     <Text>{item.recipename}</Text>
-                    <Text style={{color:'rgb(130, 130, 130)', fontSize: 12}}>{item.creator}</Text>
+                    <Text style={styles.creatorText}>{item.creator}</Text>
                   </View>
-                  <Icon name='navigate-next' />
+                  <Icon name='navigate-next' color={colors.dark}/>
                 </View>
 
               </TouchableOpacity>
@@ -89,9 +91,9 @@ class MainFeed extends Component {
 
         <TouchableOpacity
           style={styles.button}
-          onPress = {() => this.navToCreateRecipe()}
+          onPress = {() => this.signOut()}
         >
-          <Text style={{color:"rgb(255, 255, 255)"}}>create recipe</Text>
+          <Text style={styles.whiteText}>sign out</Text>
         </TouchableOpacity>
 
         {/* sign out button */}
@@ -99,7 +101,7 @@ class MainFeed extends Component {
           style={styles.button}
           onPress={() => {this.navToTestCreate()}}
         >
-          <Text style={{color:"rgb(255, 255, 255)"}}>test create</Text>
+          <Text style={styles.whiteText}>test create</Text>
         </TouchableOpacity>
       </View>
     );
@@ -111,27 +113,44 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgb(255, 255, 255)',
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingVertical:10,
+    backgroundColor: colors.primaryBackground,
+  },
+  listItems: {
+    flex:1,
+    width:95+'%'
+  },
+  itemRow: {
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems: 'center'
   },
   button: {
     width:70+'%',
-    padding: 7,
-    marginBottom: 30,
-    borderRadius: 5,
-    backgroundColor:'rgb(57, 181, 174)',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 7,
+    marginBottom: 10,
+    borderColor: colors.primaryBorder,
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: colors.primary,
   },
   recipeTab: {
     padding: 5,
     paddingHorizontal:10,
     borderRadius: 5,
-    backgroundColor: 'rgba(236, 246, 246, 0.5)',
+    backgroundColor: colors.veryLight,
     marginBottom: 5,
-    borderColor: 'rgb(216, 231, 229)',
+    borderColor: colors.light,
     borderWidth: 1
+  },
+  creatorText: {
+    color: colors.placeholder,
+    fontSize: 12
+  },
+  whiteText: {
+    color:"rgb(255, 255, 255)"
   },
   logo: {
     width: 50+'%',

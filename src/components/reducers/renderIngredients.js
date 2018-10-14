@@ -27,7 +27,7 @@ const renderMeasureField = ({ input, label, type, meta: { touched, error, warnin
 )
 
 
-const renderIngField = ({ fields }) => (
+const renderIngredients = ({ fields }) => (
   <ScrollView
     contentContainerStyle={styles.scrollContainer}
     ref={ref => this.scrollView = ref}
@@ -35,17 +35,17 @@ const renderIngField = ({ fields }) => (
       this.scrollView.scrollToEnd({animated: true})
     }}
     >
-    {fields.map((ingredient, index) =>
+    {fields.map((ingredients, index) =>
       <View key={index} style={styles.container}>
-        <View flexDirection='row' justifyContent='space-between' style={{width:95+'%', marginBottom:10}}>
+        <View flexDirection='row' justifyContent='space-between' style={styles.itemContainer}>
           <Field
-            name={`${ingredient}.name`}
+            name={`${ingredients}.name`}
             type="text"
             component={renderNameField}
             label= {"ingredient " + (index+1)}
           />
           <Field
-            name={`${ingredient}.measure`}
+            name={`${ingredients}.measure`}
             type="text"
             component={renderMeasureField}
             label="measure"
@@ -80,8 +80,12 @@ const styles = StyleSheet.create({
     width:100+'%',
     justifyContent: 'center',
     alignItems:'center',
-    paddingVertical: 8,
     marginBottom:5,
+  },
+  itemContainer: {
+    width:95+'%',
+    padding: 9,
+    borderRadius:5,
     backgroundColor: 'rgba(241, 249, 249, 0.55)',
     borderColor: 'rgba(240, 240, 240, 1)',
     borderWidth:1
@@ -131,4 +135,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default renderIngField
+export default renderIngredients

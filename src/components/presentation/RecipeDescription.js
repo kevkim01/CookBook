@@ -14,7 +14,7 @@ class RecipeDescription extends Component {
     }
   }
 
-  
+
 
   componentDidMount(){
     var key = this.props.navigation.getParam('recipeid');
@@ -25,7 +25,7 @@ class RecipeDescription extends Component {
         recipeName: snapshot.val().name,
         creator: snapshot.val().creator,
         category: snapshot.val().category,
-        cooktime: snapshot.val().cooktime
+        cooktime: snapshot.val().cookTime
       })
     })
   }

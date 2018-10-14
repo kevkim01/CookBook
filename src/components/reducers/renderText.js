@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { Container, Item, Input, Header, Body, Content, Title, Button, Toast } from 'native-base';
 
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
+const renderText = ({ input, label, type, meta: { touched, error, warning } }) => (
     <View style={styles.container}>
       <Text>{type}</Text>
       <TextInput
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default renderField
+export default renderText
