@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert, Picker } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { Recipe } from '../presentation';
 import firebase from 'react-native-firebase';
-import { Icon } from 'react-native-elements';
+import { Icon, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Form, Item, Picker, Input, Label } from 'native-base';
+import Test from '../reducers/test.js';
+import { store } from '../reducers';
+import { Provider } from 'react-redux';
 
 class CreateRecipe extends Component {
   constructor(props) {
@@ -108,164 +112,10 @@ class CreateRecipe extends Component {
     })
   }
 
-
-  // ref={ref => this.scrollView = ref}
-  // onContentSizeChange={(contentWidth, contentHeight)=>{
-  //   this.scrollView.scrollToEnd({animated: true})
-  // }}
   render(){
     return(
       <View style={styles.container}>
-        <ScrollView
-          contentContainerStyle={styles.containerScroll}
-        >
-
-          {/* Recipe Name input -- Required */}
-          <View style={{flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}}>
-            <Text style={{color:'red', fontWeight:'bold'}}>* </Text>
-            <Text style={styles.textHeader}>name your recipe</Text>
-          </View>
-          <TextInput
-            style = {styles.textinput}
-            placeholder='ex: beef wellington'
-            spellCheck={true}
-            autoCorrect={false}
-            value={this.state.recipeName}
-            onChangeText={recipeName => this.setState({recipeName})}
-          />
-
-          {/* Creator input */}
-          <Text style={styles.textHeader}>who created it?</Text>
-          <TextInput
-            style = {styles.textinput}
-            placeholder='ex: gordon ramsey'
-            spellCheck={true}
-            autoCorrect={false}
-            value={this.state.creator}
-            onChangeText={creator => this.setState({creator})}
-          />
-
-          {/* Cook time input */}
-          <Text style={styles.textHeader}>cook time</Text>
-          <TextInput
-            style = {styles.textinput}
-            placeholder='ex: 1 hr'
-            spellCheck={true}
-            autoCorrect={false}
-            value={this.state.cooktime}
-            onChangeText={cooktime => this.setState({cooktime})}
-          />
-
-          {/* <Text style={{color:'rgb(208, 204, 204)', fontSize:14}}>choose category</Text> */}
-          <View style={styles.rowStyle}>
-            <Text style={{color:'red', fontWeight:'bold'}}>*</Text>
-            <Picker
-              mode='dropdown'
-              selectedValue={this.state.category}
-              style={{ width: 80 +'%', height: 100}}
-              itemStyle={{fontSize:15, height:100}}
-              onValueChange={(item, index) => this.setState({category:item})}
-            >
-              <Picker.Item label='choose category' value='' />
-              <Picker.Item label='appetizer' value='appetizer' />
-              <Picker.Item label='main course' value='main course' />
-              <Picker.Item label='desert' value='desert' />
-            </Picker>
-            <Text style={{color:"rgb(255, 255, 255)"}}>*</Text>
-          </View>
-
-          {/* Ingredients input */}
-          <Text style={styles.textHeader}>add your ingredients and measures</Text>
-          {this.state.ingredients.map((item,index) =>
-            <View style={styles.rowStyle} key = {index}>
-              <Text style={{color:"rgb(255, 255, 255)"}}> x</Text>
-              <View style={{width:80+'%', flexDirection:'row', justifyContent:'space-between'}}>
-                <TextInput
-                  style={styles.ingredientinput}
-                  placeholder='ex: filet mignon'
-                  spellCheck={true}
-                  autoCorrect={false}
-                  clearButtonMode={'while-editing'}
-                  value={item.name}
-                  onChangeText={(e)=> this.handleChange(e, index, 'ingredients', 'name')}
-                />
-                <TextInput
-                  style={styles.quantityinput}
-                  placeholder='ex: 1 lb'
-                  spellCheck={true}
-                  autoCorrect={false}
-                  clearButtonMode={'while-editing'}
-                  value={item.quantity}
-                  onChangeText={(e)=> this.handleChange(e, index, 'ingredients', 'quantity')}
-                />
-              </View>
-              <TouchableOpacity
-                onPress={() => {this.deleteInput(index, 'ingredients')}}
-              >
-                <Icon
-                  name='remove-circle-outline'
-                  size= {15}
-                  onPress={() => {this.deleteInput(index, 'ingredients')}}
-                  containerStyle={{alignItems:'center'}}
-                  />
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {/* add ingredients button */}
-          <TouchableOpacity
-            style = {styles.addButton}
-            onPress={() => {this.addInput('ingredients')}}
-          >
-            <Text style={{color:"rgb(255, 255, 255)", fontWeight:'bold'}}>+</Text>
-          </TouchableOpacity>
-
-          {/* Instructions input */}
-          <Text style={styles.textHeader}>add your instructions</Text>
-          {this.state.instructions.map((item,index) =>
-            <View style={styles.rowStyle} key = {index}>
-              <Text style={{color:"rgb(255, 255, 255)"}}> x</Text>
-              <TextInput
-                style={styles.instructioninput}
-                placeholder='ex: season filet with salt'
-                spellCheck={true}
-                autoCorrect={false}
-                clearButtonMode={'while-editing'}
-                value={item.step}
-                onChangeText={(e)=> this.handleChange(e, index,'instructions', 'step')}
-              />
-              <TouchableOpacity
-                onPress={() => {this.deleteInput(index, 'instructions')}}
-              >
-              <Icon
-                name='remove-circle-outline'
-                size= {15}
-                onPress={() => {this.deleteInput(index, 'instructions')}}
-                containerStyle={{alignItems:'center'}}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {/* add instructions button */}
-          <TouchableOpacity
-            style = {styles.addButton}
-            onPress={() => {this.addInput('instructions')}}
-          >
-            <Text style={{color:"rgb(255, 255, 255)"}}>+</Text>
-          </TouchableOpacity>
-        </ScrollView>
-
-        <View style={styles.footer}>
-
-          {/* submit button */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {this.submitForm()}}
-          >
-            <Text style={{color:"rgb(255, 255, 255)"}}>Submit</Text>
-          </TouchableOpacity>
-        </View>
+        <Test/>
       </View>
     );
   }
@@ -276,8 +126,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'rgb(255, 255, 255)',
-    paddingTop: 10,
-    paddingBottom: 10
   },
   containerScroll: {
     flexGrow: 1,
@@ -347,5 +195,47 @@ const styles = StyleSheet.create({
     marginBottom: 20
   }
 });
+//
+// <ScrollView
+//   contentContainerStyle={styles.containerScroll}
+// >
+//
+//   {/* Recipe Name input -- Required */}
+//
+//   <FormLabel>Recipe Name</FormLabel>
+//   <FormInput
+//     onChangeText={recipeName => this.setState({recipeName})}
+//     placeholder='Beef Wellington'
+//   />
+//   <FormValidationMessage>Error message</FormValidationMessage>
+//
+//   <FormLabel>Creator</FormLabel>
+//   <FormInput
+//     onChangeText={creator => this.setState({creator})}
+//     placeholder='Gordon Ramsey'
+//   />
+//   <FormValidationMessage>Error message</FormValidationMessage>
+//
+//   <Form>
+//
+//     <Item picker>
+//       <Picker
+//         mode="dropdown"
+//         iosIcon={<Icon name='menu' />}
+//         placeholder="Select your SIM"
+//         selectedValue={this.state.category}
+//         onValueChange={category => this.setState({category})}
+//       >
+//         <Picker.Item label="Wallet" value="key0" />
+//         <Picker.Item label="ATM Card" value="key1" />
+//         <Picker.Item label="Debit Card" value="key2" />
+//         <Picker.Item label="Credit Card" value="key3" />
+//         <Picker.Item label="Net Banking" value="key4" />
+//       </Picker>
+//     </Item>
+//   </Form>
+//
+// </ScrollView>
+
 
 export default CreateRecipe;

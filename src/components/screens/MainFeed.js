@@ -55,10 +55,6 @@ class MainFeed extends Component {
     this.props.navigation.navigate('createrecipe');
   }
 
-  navToTestCreate() {
-    this.props.navigation.navigate('testcreate');
-  }
-
   selectRecipe(key) {
     console.log(key);
     this.props.navigation.navigate('recipepage',{recipeid: [key]});
@@ -99,9 +95,9 @@ class MainFeed extends Component {
         {/* sign out button */}
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {this.navToTestCreate()}}
+          onPress={() => {this.navToCreateRecipe()}}
         >
-          <Text style={styles.whiteText}>test create</Text>
+          <Text style={styles.whiteText}>create recipe</Text>
         </TouchableOpacity>
       </View>
     );

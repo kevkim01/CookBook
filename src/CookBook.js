@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { LandingScreen, MainFeed, LogIn, SignUp, Loading } from './components/screens';
-import { CreateRecipe, TestCreate } from './components/container';
+import { CreateRecipe } from './components/container';
 import { Logo, RecipeDescription, RecipeIngredients, RecipeInstructions } from './components/presentation';
 import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import { Icon } from 'react-native-elements';
@@ -42,7 +42,6 @@ const RecipeTabs = createBottomTabNavigator({
 const FeedStack = createStackNavigator({
   mainfeed: MainFeed,
   createrecipe: CreateRecipe,
-  testcreate: TestCreate,
   recipepage: RecipeTabs
 },
 {
