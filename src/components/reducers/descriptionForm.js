@@ -2,12 +2,12 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import validate from './validate'
 import renderText from './renderText'
-import renderPickerField from './renderPickerField'
+import renderPicker from './renderPicker'
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { Container, Item, Input, Header, Body, Content, Title, Button, Toast, Picker } from 'native-base';
 import { Icon } from 'react-native-elements';
 
-const WizardFormFirstPage = props => {
+const descriptionForm = props => {
   const { handleSubmit } = props
   return (
     <View style={styles.container}>
@@ -27,7 +27,7 @@ const WizardFormFirstPage = props => {
       <Field
         name="category"
         type="how is this dish classified?"
-        component={renderPickerField}
+        component={renderPicker}
         label="select a value"
       >
         <Picker.Item label="appetizer" value="appetizer" />
@@ -71,4 +71,4 @@ export default reduxForm({
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
-})(WizardFormFirstPage)
+})(descriptionForm)

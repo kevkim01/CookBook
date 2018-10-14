@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import WizardFormFirstPage from './wizardFormFirstPage';
-import WizardFormSecondPage from './wizardFormSecondPage';
-import WizardFormThirdPage from './wizardFormThirdPage';
+import DescriptionForm from './descriptionForm';
+import IngredientsForm from './ingredientsForm';
+import InstructionsForm from './instructionsForm';
 
 
-class WizardForm extends Component {
+class recipeForm extends Component {
   constructor(props) {
     super(props)
     this.nextPage = this.nextPage.bind(this)
@@ -42,15 +42,15 @@ class WizardForm extends Component {
           </View>
         </View>
 
-        {page === 1 && <WizardFormFirstPage onSubmit={this.nextPage} />}
+        {page === 1 && <DescriptionForm onSubmit={this.nextPage} />}
         {page === 2 && (
-          <WizardFormSecondPage
+          <IngredientsForm
             previousPage={this.previousPage}
             onSubmit={this.nextPage}
           />
         )}
         {page === 3 && (
-          <WizardFormThirdPage
+          <InstructionsForm
             previousPage={this.previousPage}
             onSubmit={onSubmit}
           />
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
   }
 })
 
-WizardForm.propTypes = {
+recipeForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
-export default WizardForm
+export default recipeForm

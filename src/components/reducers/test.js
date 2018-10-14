@@ -3,7 +3,7 @@ import allReducers from './index.js';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import WizardForm from './wizardForm.js';
+import RecipeForm from './recipeForm.js';
 import { Field, reduxForm } from 'redux-form';
 import store from './index';
 import showResults from './showResults.js'
@@ -13,7 +13,7 @@ import showResults from './showResults.js'
     return(
       <Provider store= {store}>
         <View style={styles.container}>
-          <WizardForm onSubmit={showResults}/>
+          <RecipeForm onSubmit={showResults}/>
         </View>
       </Provider>
     )

@@ -21,7 +21,7 @@ const renderColorSelector = ({ input, meta: { touched, error } }) => (
   </div>
 )
 
-const WizardFormThirdPage = props => {
+const instructionsForm = props => {
   const { handleSubmit, pristine, previousPage, submitting, reset } = props
   return (
     <View style={styles.container}>
@@ -96,4 +96,4 @@ export default reduxForm({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
-})(WizardFormThirdPage)
+})(instructionsForm)

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollVi
 import { Container, Item, Input, Header, Body, Content, Title, Button, Toast, Picker } from 'native-base';
 import { Icon } from 'react-native-elements';
 
-const renderPickerField = ({ input: { onChange, value, ...inputProps }, label, type, children, meta: { touched, error, warning }, ...pickerProps }) => (
+const renderPicker = ({ input: { onChange, value, ...inputProps }, label, type, children, meta: { touched, error, warning }, ...pickerProps }) => (
     <View style={styles.container}>
       <Text>{type}</Text>
       <Picker
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default renderPickerField
+export default renderPicker

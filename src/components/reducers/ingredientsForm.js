@@ -8,7 +8,7 @@ import { Icon } from 'react-native-elements';
 const renderError = ({ meta: { touched, error } }) =>
   touched && error ? <span>{error}</span> : false
 
-const WizardFormSecondPage = props => {
+const ingredientsForm = props => {
   const { handleSubmit, previousPage } = props
   return (
     <View style={styles.container}>
@@ -67,4 +67,4 @@ export default reduxForm({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
-})(WizardFormSecondPage)
+})(ingredientsForm)
