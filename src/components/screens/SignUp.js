@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 import firebase from 'react-native-firebase';
 import config from '../../config';
-import colors from '../../utils/colors.js';
 
 class SignUp extends Component {
   constructor(props) {
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   login: {
-    color:colors.secondary,
+    color:'rgb(57, 181, 174)',
   }
 });
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import config from '../../config'
-import colors from '../../utils/colors.js';
 
 class LandingScreen extends Component {
   navToLogin() {
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: 'rgb(255, 255, 255)',
   },
   button: {
     width:70+'%',
@@ -47,10 +46,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 7,
     marginBottom: 10,
-    borderColor: colors.primaryBorder,
+    borderColor: 'rgb(52, 164, 158)',
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: colors.primary,
+    backgroundColor: 'rgb(57, 181, 174)',
   },
   logo: {
     width: 75+'%',

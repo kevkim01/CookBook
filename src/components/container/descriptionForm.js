@@ -4,11 +4,11 @@ import { Container, Item, Input, Header, Body, Content, Title, Button, Toast, Pi
 import { Icon } from 'react-native-elements';
 import { Field, reduxForm } from 'redux-form';
 import validate from '../reducers/validate';
-import RenderText from '../reducers/renderText';
-import RenderPicker from '../reducers/renderPicker';
+import RenderText from '../renderFields/renderText';
+import RenderPicker from '../renderFields/renderPicker';
 
 
-const descriptionForm = props => {
+const DescriptionForm = props => {
   const { handleSubmit } = props
   return (
     <View style={styles.container}>
@@ -72,4 +72,4 @@ export default reduxForm({
   destroyOnUnmount: false, // <------ preserve form data
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
-})(descriptionForm)
+})(DescriptionForm)

@@ -6,7 +6,6 @@ const validate = values => {
   if (!values.category) {
     errors.category = 'Required'
   }
-
   return errors
 }
 

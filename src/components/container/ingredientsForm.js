@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert 
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import { Icon } from 'react-native-elements';
 import validate from '../reducers/validate';
-import RenderIngredients from '../reducers/renderIngredients';
+import RenderIngredients from '../renderFields/renderIngredients';
 
 const renderError = ({ meta: { touched, error } }) =>
   touched && error ? <span>{error}</span> : false
 
-const ingredientsForm = props => {
+const IngredientsForm = props => {
   const { handleSubmit, previousPage } = props
   return (
     <View style={styles.container}>
@@ -67,4 +67,4 @@ export default reduxForm({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
-})(ingredientsForm)
+})(IngredientsForm)

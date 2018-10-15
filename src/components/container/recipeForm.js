@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import DescriptionForm from './descriptionForm';
-import IngredientsForm from './ingredientsForm';
-import InstructionsForm from './instructionsForm';
+import DescriptionForm from './DescriptionForm';
+import IngredientsForm from './IngredientsForm';
+import InstructionsForm from './InstructionsForm';
 
 
 class recipeForm extends Component {

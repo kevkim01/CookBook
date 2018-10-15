@@ -1,4 +1,4 @@
-export default {
+export const appColors = {
   primary: 'rgb(57, 181, 174)',
   secondary: 'rgb(255,182,125)',
   primaryBorder: 'rgb(52, 164, 158)',

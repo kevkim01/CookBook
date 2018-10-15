@@ -4,7 +4,7 @@ import { Recipe } from '../presentation';
 import firebase from 'react-native-firebase';
 import { Icon } from 'react-native-elements';
 
-class CreateRecipe extends Component {
+class CreateRecipeOld extends Component {
   constructor(props) {
     super(props);
     this.state={
@@ -348,4 +348,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CreateRecipe;
+export default CreateRecipeOld;

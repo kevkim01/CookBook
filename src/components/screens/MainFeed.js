@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, Alert } from 'react-native';
 import { Icon } from 'react-native-elements'
 import firebase from 'react-native-firebase';
-
 import { Recipe, Logo } from '../presentation';
-import { CreateRecipe } from '../container';
-import colors from '../../utils/colors.js';
 
 class MainFeed extends Component {
   constructor(props) {
@@ -78,7 +75,7 @@ class MainFeed extends Component {
                     <Text>{item.recipename}</Text>
                     <Text style={styles.creatorText}>{item.creator}</Text>
                   </View>
-                  <Icon name='navigate-next' color={colors.dark}/>
+                  <Icon name='navigate-next' color={'rgb(88,88,88)'}/>
                 </View>
 
               </TouchableOpacity>
@@ -110,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical:10,
-    backgroundColor: colors.primaryBackground,
+    backgroundColor: 'rgb(255, 255, 255)',
   },
   listItems: {
     flex:1,
@@ -127,22 +124,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 7,
     marginBottom: 10,
-    borderColor: colors.primaryBorder,
+    borderColor: 'rgb(52, 164, 158)',
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: colors.primary,
+    backgroundColor:'rgb(57, 181, 174)',
   },
   recipeTab: {
     padding: 5,
     paddingHorizontal:10,
     borderRadius: 5,
-    backgroundColor: colors.veryLight,
+    backgroundColor: 'rgba(240, 240, 240, 0.8)',
     marginBottom: 5,
-    borderColor: colors.light,
+    borderColor: 'rgb(219,219,219)',
     borderWidth: 1
   },
   creatorText: {
-    color: colors.placeholder,
+    color: 'rgb(130, 130, 130)',
     fontSize: 12
   },
   whiteText: {

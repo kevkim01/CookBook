@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
-import { Container, Item, Input, Header, Body, Content, Title, Button, Toast, Picker } from 'native-base';
+import { View, Text, StyleSheet } from 'react-native';
+import { Picker } from 'native-base';
 import { Icon } from 'react-native-elements';
 
 const renderPicker = ({ input: { onChange, value, ...inputProps }, label, type, children, meta: { touched, error, warning }, ...pickerProps }) => (

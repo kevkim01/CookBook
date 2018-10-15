@@ -3,24 +3,10 @@ import { Field, FieldArray, reduxForm } from 'redux-form';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
 import validate from '../reducers/validate';
-import RenderText from '../reducers/renderText';
-import RenderInstructions from '../reducers/renderInstructions';
+import RenderText from '../renderFields/renderText';
+import RenderInstructions from '../renderFields/renderInstructions';
 
-const renderColorSelector = ({ input, meta: { touched, error } }) => (
-  <div>
-    <select {...input}>
-      <option value="">Select a color...</option>
-      {colors.map(val => (
-        <option value={val} key={val}>
-          {val}
-        </option>
-      ))}
-    </select>
-    {touched && error && <span>{error}</span>}
-  </div>
-)
-
-const instructionsForm = props => {
+const InstructionsForm = props => {
   const { handleSubmit, pristine, previousPage, submitting, reset } = props
   return (
     <View style={styles.container}>
@@ -95,4 +81,4 @@ export default reduxForm({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
-})(instructionsForm)
+})(InstructionsForm)

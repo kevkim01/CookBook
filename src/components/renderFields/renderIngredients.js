@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
-import { Container, Item, Input, Header, Body, Content, Title, Button } from 'native-base';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView} from 'react-native';
 import { Field } from 'redux-form';
 import { Icon } from 'react-native-elements';
 

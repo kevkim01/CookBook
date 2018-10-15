@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
-import { Container, Item, Input, Header, Body, Content, Title, Button } from 'native-base';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { Field } from 'redux-form';
 import { Icon } from 'react-native-elements';
 
@@ -14,18 +13,6 @@ const renderNameField = ({ input, label, type, meta: { touched, error, warning }
       {touched && error && <Text>{error}</Text>}
     </View>
 )
-
-const renderMeasureField = ({ input, label, type, meta: { touched, error, warning } }) => (
-    <View style={styles.measureContainer}>
-      <TextInput
-        {...input}
-        style ={styles.textInput}
-        placeholder={label}
-      />
-      {touched && error && <Text>{error}</Text>}
-    </View>
-)
-
 
 const renderInstructions = ({ fields }) => (
   <ScrollView

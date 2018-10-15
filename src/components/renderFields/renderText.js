@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
-import { Container, Item, Input, Header, Body, Content, Title, Button, Toast } from 'native-base';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 
 const renderText = ({ input, label, type, meta: { touched, error, warning } }) => (
     <View style={styles.container}>
