@@ -26,7 +26,7 @@ const renderMeasureField = ({ input, label, type, meta: { touched, error, warnin
 )
 
 
-const renderIngredients = ({ fields }) => (
+const renderIngredients = ({ fields, meta: { error, submitFailed } }) => (
   <ScrollView
     contentContainerStyle={styles.scrollContainer}
     ref={ref => this.scrollView = ref}
@@ -58,6 +58,9 @@ const renderIngredients = ({ fields }) => (
         </View>
       </View>
     )}
+
+    {submitFailed && error && <Text style={{color:'rgb(191, 35, 35)', paddingTop: 5}}>{error}</Text>}
+
     <View style={styles.addContainer}>
       <TouchableOpacity
         onPress = {() => fields.push({})}
@@ -85,8 +88,8 @@ const styles = StyleSheet.create({
     width:95+'%',
     padding: 9,
     borderRadius:5,
-    backgroundColor: 'rgba(241, 249, 249, 0.55)',
-    borderColor: 'rgba(240, 240, 240, 1)',
+    backgroundColor: 'rgba(240, 240, 240, 0.8)',
+    borderColor: 'rgb(219,219,219)',
     borderWidth:1
   },
   addContainer: {
