@@ -14,7 +14,7 @@ const renderNameField = ({ input, label, type, meta: { touched, error, warning }
     </View>
 )
 
-const renderInstructions = ({ fields }) => (
+const renderInstructions = ({ fields, meta: { error, submitFailed } }) => (
   <ScrollView
     contentContainerStyle={styles.scrollContainer}
     ref={ref => this.scrollView = ref}
@@ -24,7 +24,7 @@ const renderInstructions = ({ fields }) => (
     >
     {fields.map((instructions, index) =>
       <View key={index} style={styles.container}>
-        <View flexDirection='row' justifyContent='space-between' style={{width:95+'%', marginBottom:10}}>
+        <View flexDirection='row' justifyContent='space-between' style={styles.itemContainer}>
           <Field
             name={`${instructions}.step`}
             type="text"
@@ -40,6 +40,9 @@ const renderInstructions = ({ fields }) => (
         </View>
       </View>
     )}
+
+    {submitFailed && error && <Text style={{color:'rgb(191, 35, 35)', paddingTop: 5}}>{error}</Text>}
+
     <View style={styles.addContainer}>
       <TouchableOpacity
         onPress = {() => fields.push({})}
@@ -61,10 +64,14 @@ const styles = StyleSheet.create({
     width:100+'%',
     justifyContent: 'center',
     alignItems:'center',
-    paddingVertical: 8,
     marginBottom:5,
-    backgroundColor: 'rgba(241, 249, 249, 0.55)',
-    borderColor: 'rgba(240, 240, 240, 1)',
+  },
+  itemContainer: {
+    width:95+'%',
+    padding: 9,
+    borderRadius:5,
+    backgroundColor: 'rgba(240, 240, 240, 0.8)',
+    borderColor: 'rgb(219,219,219)',
     borderWidth:1
   },
   addContainer: {
